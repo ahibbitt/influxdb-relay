@@ -26,3 +26,22 @@ services:
     depends_on:
       - influxdb-backend-a
       - influxdb-backend-b
+  influxdb-proxy:
+    image: ahibbitt/influxdb-proxy
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+    environment:
+      BACKEND_influxdba: influxdb-backend-a:8086:8083
+      BACKEND_influxdbb: influxdb-backend-b:8086:8083
+      RELAY_influxdba: influxdb-relay-a:9096
+      RELAY_influxdbb: influxdb-relay-b:9096
+    depends_on:
+      - influxdb-relay-a
+      - influxdb-relay-b
+      - influxdb-backend-a
+      - influxdb-backend-b
+  sut:
+    build: sut
+    depends_on:
+      - influxdb-proxy
