@@ -1,8 +1,7 @@
 FROM alpine:3.7
 
 
-COPY sut.sh /bin/sut
-RUN apk --update add bind-tools && \
-    chmod +x /bin/sut
+COPY sut.sh /bin/sut.sh
+RUN apk --update add bind-tools 
 
-CMD ["/bin/sut.sh"]
+CMD ["/bin/sh /bin/sut"]
