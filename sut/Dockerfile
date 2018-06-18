@@ -1,6 +1,6 @@
-FROM alpine:3.7
+FROM alpine:latest
 
 COPY sut.sh /bin/sut.sh
-RUN apk --update add bind-tools 
+RUN apk --update add bind-tools pkgconf ncurses-terminfo ncurses-terminfo-base ncurses-libs readline bash
 
-CMD ["/bin/sh", "/bin/sut.sh"]
+CMD ["/bin/bash", "/bin/sut.sh"]
