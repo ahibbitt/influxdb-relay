@@ -18,7 +18,7 @@ EXPOSE 9096
 COPY relay.toml /etc/relay.toml.tpl
 COPY run.sh /bin/
 
-ENTRYPOINT ["/bin/sh", "-c"]
-CMD ["/bin/bash", "/bin/run.sh"]
+ENTRYPOINT ["/bin/sh"]
+CMD ["/bin/run.sh"]
 
 LABEL maintainer="7901922+ahibbitt@users.noreply.github.com"

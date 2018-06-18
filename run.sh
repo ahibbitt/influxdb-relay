@@ -45,14 +45,3 @@ fi
 CMD="/bin/influxdb-relay"
 CMDARGS="-config=${CONFIG_FILE}"
 exec "$CMD" $CMDARGS
-
-while sleep 60; do
-  ps aux |grep influxdb-relay |grep -q -v grep
-  PROCESS_STATUS=$?
-  # If the greps above find anything, they exit with 0 status
-  # If they are not both 0, then something is wrong
-  if [ $PROCESS_STATUS -ne 0 - ]; then
-    echo "influxdb processes has already exited."
-    exit 1
-  fi
-done

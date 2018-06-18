@@ -2,12 +2,8 @@ version: '3'
 services:
   influxdb-backend-a:
     image: influxdb:1.5-alpine
-    environment:
-      PRE_CREATE_DB: "mydb"
   influxdb-backend-b:
     image: influxdb:1.5-alpine
-    environment:
-      PRE_CREATE_DB: "mydb"
   influxdb-relay-a:
     build: .
     image: ahibbitt/influxdb-relay

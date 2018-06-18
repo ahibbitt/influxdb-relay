@@ -1,8 +1,11 @@
 #!/bin/bash
+sleep 10
 
 PROXY_HOST=influxdb-proxy
 PROXY_PORT=8086
 BACKEND_HOSTS="influxdb-backend-a influxdb-backend-b"
+BACKEND_A=$(echo $BACKEND_HOSTS |cut -d " " -f1)
+BACKEND_B=$(echo $BACKEND_HOSTS |cut -d " " -f2)
 BACKEND_PORT=8086
 
 echo -n "wait for influxdb proxy to be available...     "
@@ -21,6 +24,24 @@ done
 echo "[OK]"
 
 sleep 3
+
+d="$(date +%s)000000000"
+echo -n "create test influxdb db on host A...                       "
+curl -s -i -XPOST "http://${BACKEND_A}:${BACKEND_PORT}/query" --data-urlencode "q=CREATE DATABASE mydb" | grep -w 200
+if [[ ${PIPESTATUS[1]} -ne 0 ]]; then
+  echo "[failed]"
+  exit 1
+fi
+echo "[OK]"
+
+d="$(date +%s)000000000"
+echo -n "create test influxdb db on host B...                       "
+curl -s -i -XPOST "http://${BACKEND_B}:${BACKEND_PORT}/query" --data-urlencode "q=CREATE DATABASE mydb" | grep -w 200
+if [[ ${PIPESTATUS[1]} -ne 0 ]]; then
+  echo "[failed]"
+  exit 1
+fi
+echo "[OK]"
 
 d="$(date +%s)000000000"
 echo -n "push data to influxdb...                       "
