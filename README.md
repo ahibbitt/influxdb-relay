@@ -1,9 +1,10 @@
 # InfluxDB relay
 
-https://github.com/influxdata/influxdb-relay
+<https://github.com/influxdata/influxdb-relay>
 
-based on https://github.com/appcelerator/docker-influxdb-relay
+Based on <https://github.com/appcelerator/docker-influxdb-relay>
 
+Relay allows for a somewhat highly avaliable influxdb setup by duplicating writes to one or more standalone influxdb instances. Relay sits in front of each influxdb instance, recieves a request and writes to one of the influxdb instances, returning a successful write acnowledgement. The write is then replicated on the other instances managed by Relay. Read requests are directed to the influxdb instances using a load balancer. This work allows the Relay element of the stack to be run from within a Docker container. A load balancer implementation, based on haproxy and used to test this project can also be found at <https://github.com/ahibbitt/influxdb-proxy>
 ## Run the container
 
     docker -e HTTP_BACKEND_influxdb_a=influxdb-a:8086 -e HTTP_BACKEND_influxdb_b=influxdb-b:8086 \
