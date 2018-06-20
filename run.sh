@@ -28,7 +28,7 @@ if [ -f "${CONFIG_OVERRIDE_FILE}" ]; then
   cp "${CONFIG_OVERRIDE_FILE}" "${CONFIG_FILE}"
 else
     if [ -f ${CONFIG_FILE}.tpl ]; then
-        envtpl ${CONFIG_FILE}.tpl
+        envtpl -o ${CONFIG_FILE} ${CONFIG_FILE}.tpl
         if [ $? -ne 0 ]; then
             echo "ERROR - unable to generate $CONFIG_FILE"
             exit 1
